@@ -1,6 +1,6 @@
-# bitcoin-protocol
+<img src="img/millions.jpg">
 
-A Clojure library designed to ... well, that part is up to you.
+# bitcoin-protocol
 
 ## Usage
 
