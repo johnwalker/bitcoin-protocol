@@ -11,5 +11,4 @@ can be used to communicate with peers within Bitcoin networks.
 
 Copyright © 2014 John Walker
 
-Distributed under the Eclipse Public License version 1.0. See LICENSE
-for more information.
+Distributed under the Eclipse Public License version 1.0. 
