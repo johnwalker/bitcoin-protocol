@@ -1,6 +1,7 @@
 <img src="img/millions.jpg">
 
 # bitcoin-protocol
+[![Build Status](https://travis-ci.org/johnwalker/bitcoin-protocol.svg?branch=master)](https://travis-ci.org/johnwalker/bitcoin-protocol)
 
 This is an implementation of the
 [Bitcoin protocol](https://en.bitcoin.it/wiki/Protocol_specification). It
