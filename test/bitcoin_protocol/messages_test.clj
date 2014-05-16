@@ -9,7 +9,7 @@
           (for [x (range (.remaining h))]
             (format "%02X " (.get h x))))))
 
-(fact "Varint encoding seems to work."
+(fact "Varint encoding seems to work"
       (str-bytes (first (encode pm/varint 0x05))) => "05"
       (str-bytes (first (encode pm/varint 0x32))) => "32"
       (str-bytes (first (encode pm/varint 0xFC))) => "FC"                  
@@ -24,10 +24,10 @@
       (str-bytes (first (encode pm/varint 0xFFFFFFFFFF))) => "FF FF FF FF FF FF 00 00 00")
 
 (let [[satoshi-varint satoshi-str] (encode pm/varstr "/Satoshi:0.7.2/")]
-  (facts "Varstr encoding seems to work."
+  (facts "Varstr encoding seems to work"
          (fact "Length of \"/Satoshi:0.7.2/\" is 15"
                (str-bytes satoshi-varint) => "0F")
-         (fact "Char array of \"/Satoshi:0.7.2/\" is correct."
+         (fact "Char array of \"/Satoshi:0.7.2/\" is correct"
                (str-bytes satoshi-str) => "2F 53 61 74 6F 73 68 69 3A 30 2E 37 2E 32 2F")))
 
 
