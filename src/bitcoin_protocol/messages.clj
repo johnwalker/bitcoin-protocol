@@ -1,4 +1,4 @@
-(ns bitcoin-protocol.messages
+(ns bitcoin-protocol.messages 
   (:require [gloss.core :refer :all]
             [gloss.io :refer :all]))
 
@@ -19,3 +19,6 @@
                              0xffffffff 0xfe
                              0xff))))
 
+(defcodec varstr (finite-frame
+                  varint
+                  (string :ascii)))
