@@ -34,3 +34,24 @@
   (+ (dec length)
      (* 2 length)))
 
+(let [[nettime
+       services
+       ip
+       port]
+      (map str-bytes (encode pm/net-addrt
+                             [1
+                              1
+                              "192.168.1.1"
+                              0xFF]))]
+  (facts "Netaddrt seems to work"
+         (facts "Timestamp"
+                (fact "4 bytes in timestamp"
+                      (count nettime) => (expected-bytes 4))
+                (fact "Timestamp example encoded as expected (4 byte Little Endian)"
+                      nettime => "01 00 00 00"))
+         (facts "Services"
+                (fact "8 bytes in services"
+                      (count services) => (expected-bytes 8))
+                (fact "Services example encoded as expected (8 byte Little Endian)"
+                      services => "01 00 00 00 00 00 00 00"))))
+
