@@ -32,7 +32,12 @@
                                             (clojure.string/split s #"\."))))
                                  (fn [b]
                                    (apply str (interpose "." (take-last 4 b)))))) 
+
 (defcodec net-addrt (compile-frame [:uint32-le
                                     :uint64-le
                                     ip-addr
                                     :uint16-le]))
+
+(defcodec magic (enum :uint32-le
+                      {:magic-value 0xd9b4bef9}))
+
