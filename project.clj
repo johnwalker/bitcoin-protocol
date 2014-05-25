@@ -1,4 +1,4 @@
-(defproject bitcoin-protocol "0.3.0"
+(defproject bitcoin-protocol "0.4.0"
   :description "FIXME: write description"
   :url "http://example.com/FIXME"
   :license {:name "Eclipse Public License"
