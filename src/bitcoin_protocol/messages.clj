@@ -22,3 +22,13 @@
 (defcodec varstr (finite-frame
                   varint
                   (string :ascii)))
+
+(defcodec ip-addr (compile-frame (repeated :ubyte :prefix :none)
+                                 (fn [s]
+                                   (concat (repeat 10 0)
+                                           (repeat 2 0xFF)
+                                           (map
+                                            #(Integer/parseInt %)
+                                            (clojure.string/split s #"\."))))
+                                 (fn [b]
+                                   (apply str (interpose "." (take-last 4 b)))))) 
