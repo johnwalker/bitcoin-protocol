@@ -41,3 +41,18 @@
 (defcodec magic (enum :uint32-le
                       {:magic-value 0xd9b4bef9}))
 
+
+
+(defcodec command (compile-frame 
+                   (string :ascii :length 12)
+                   (fn [s]
+                     (->> 0 char
+                          repeat
+                          (concat s)
+                          (take 12)
+                          (apply str)))
+                   (fn [s]
+                     (->> s
+                          (drop-while (fn [s] (not= s (char 0))))
+                          (apply str)))))
+
