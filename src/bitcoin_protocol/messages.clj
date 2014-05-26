@@ -56,3 +56,7 @@
                           (take-while (fn [s] (not= s (char 0))))
                           (apply str)))))
 
+
+(defn sha-256 [s]
+  (.digest (java.security.MessageDigest/getInstance "SHA-256")
+           (.getBytes s)))
