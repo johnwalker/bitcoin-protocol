@@ -66,6 +66,3 @@
   (compile-frame [:ubyte :ubyte :ubyte :ubyte]))
 
 
-(defn sha-256 [s]
-  (.digest (java.security.MessageDigest/getInstance "SHA-256")
-           (.getBytes s)))
