@@ -56,6 +56,15 @@
                           (take-while (fn [s] (not= s (char 0))))
                           (apply str)))))
 
+(defn sha-256 [bytes]
+  (.digest (java.security.MessageDigest/getInstance "SHA-256") bytes))
+
+(defn gen-checksum [bytes]
+  (take 4 (sha-256 (sha-256 bytes))))
+
+(defcodec checksum
+  (compile-frame [:ubyte :ubyte :ubyte :ubyte]))
+
 
 (defn sha-256 [s]
   (.digest (java.security.MessageDigest/getInstance "SHA-256")
