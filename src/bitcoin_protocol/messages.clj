@@ -53,6 +53,6 @@
                           (apply str)))
                    (fn [s]
                      (->> s
-                          (drop-while (fn [s] (not= s (char 0))))
+                          (take-while (fn [s] (not= s (char 0))))
                           (apply str)))))
 
