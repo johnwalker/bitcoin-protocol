@@ -65,4 +65,6 @@
 (defcodec checksum
   (compile-frame [:ubyte :ubyte :ubyte :ubyte]))
 
+(defcodec relay (enum :byte {true 1
+                             false 0}))
 
