@@ -55,6 +55,7 @@
                 (fact "Services example encoded as expected (8 byte Little Endian)"
                       services => "01 00 00 00 00 00 00 00"))))
 
+
 (facts "Checksum seems to work"
        (fact "First four bytes of hello double SHA-256 is '95 95 C9 DF'"
              ;; hello
