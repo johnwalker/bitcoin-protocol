@@ -57,5 +57,8 @@
 
 (facts "Checksum seems to work"
        (fact "First four bytes of hello double SHA-256 is '95 95 C9 DF'"
+             ;; hello
+             ;; 2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824 (first round of sha-256)
+             ;; 9595c9df90075148eb06860365df33584b75bff782a510c6cd4883a419833d50 (second round of sha-256)
              (str-bytes (first (encode pm/checksum (pm/gen-checksum (.getBytes "hello")))))
              => "95 95 C9 DF"))
