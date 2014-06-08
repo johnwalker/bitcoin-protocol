@@ -1,5 +1,6 @@
 (ns bitcoin-protocol.messages 
-  (:require [gloss.core :refer :all]
+  (:require [clojure.string :as str]
+            [gloss.core :refer :all]
             [gloss.io :refer :all]))
 
 (defcodec varint (header :ubyte
@@ -67,4 +68,16 @@
 
 (defcodec relay (enum :byte {true 1
                              false 0}))
+
+(defcodec version-payload (compile-frame [:int32-le  ;; version
+                                          :uint64-le ;; services
+                                          :int64-le  ;; timestamp
+                                          net-addrt  ;; addr recv
+                                          net-addrt  ;; addr_from
+                                          :uint64-le ;; nonce
+                                          varstr     ;; varstr
+                                          :int32-le  ;; start height
+                                          relay]))
+
+
 
