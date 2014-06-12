@@ -3,4 +3,3 @@ lein: lein2
 jdk:
   - openjdk6
   - openjdk7
-script: lein2 midje
