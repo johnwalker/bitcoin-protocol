@@ -71,15 +71,16 @@
 (defcodec relay (enum :byte {true 1
                              false 0}))
 
-(defcodec version-payload (compile-frame [:int32-le  ;; version
-                                          :uint64-le ;; services
-                                          :int64-le  ;; timestamp
-                                          net-addrt  ;; addr recv
-                                          net-addrt  ;; addr_from
-                                          :uint64-le ;; nonce
-                                          varstr     ;; varstr
-                                          :int32-le  ;; start height
-                                          relay]))
+(defcodec version-payload (compile-frame (ordered-map
+                                          :version :int32-le
+                                          :services :uint64-le
+                                          :timestamp :int64-le
+                                          :addr-recv net-addrt
+                                          :addr-from net-addrt
+                                          :nonce :uint64-le
+                                          :user-agent varstr
+                                          :start-height :int32-le
+                                          :relay relay)))
 
 
 
