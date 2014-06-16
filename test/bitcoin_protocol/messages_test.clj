@@ -162,8 +162,20 @@
        "C0 3E 03 00"
        "01")))
 
-
-
+(deftest verack-message
+  ;; Message header:
+  ;;  F9 BE B4 D9                          - Main network magic bytes
+  ;;  76 65 72 61  63 6B 00 00 00 00 00 00 - "verack" command
+  ;;  00 00 00 00                          - Payload is 0 bytes long
+  ;;  5D F6 E0 E2                          - Checksum  
+  (is (= (map str-bytes (encode pm/bitcoin-network-message
+                                {:magic :magic-value
+                                 :command "verack"}))
+         '("F9 BE B4 D9" 
+           "76 65 72 61 63 6B 00 00 00 00 00 00"
+           "00"
+           "5D F6 E0 E2")
+         )))
 
 
 
