@@ -36,6 +36,10 @@
                                  (fn [b]
                                    (apply str (interpose "." (take-last 4 b)))))) 
 
+(defcodec net-addr (compile-frame [:uint64-le
+                                   ip-addr
+                                   :uint16-le]))
+
 (defcodec net-addrt (compile-frame [:uint32-le
                                     :uint64-le
                                     ip-addr
@@ -75,8 +79,8 @@
                                           :version :int32-le
                                           :services :uint64-le
                                           :timestamp :int64-le
-                                          :addr-recv net-addrt
-                                          :addr-from net-addrt
+                                          :addr-recv net-addr
+                                          :addr-from net-addr
                                           :nonce :uint64-le
                                           :user-agent varstr
                                           :start-height :int32-le
