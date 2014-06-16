@@ -111,7 +111,56 @@
            "C0 3E 03 00"
            "01"))))
 
+(deftest version-message
+  ;; NOTE: There just happens to be a collision between these two
+  ;; examples. This is a version without the relay byte.
 
+  ;;  F9 BE B4 D9                                                                   - Main network magic bytes
+  ;;  76 65 72 73 69 6F 6E 00 00 00 00 00                                           - "version" command
+  ;;  64 00 00 00                                                                   - Payload is 100 bytes long
+  ;;  3B 64 8D 5A                                                                   - payload checksum
+
+  ;; Version message:
+  ;;  62 EA 00 00                                                                   - 60002 (protocol version 60002)
+  ;;  01 00 00 00 00 00 00 00                                                       - 1 (NODE_NETWORK services)
+  ;;  11 B2 D0 50 00 00 00 00                                                       - Tue Dec 18 10:12:33 PST 2012
+  ;;  01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 00 00 - Recipient address info - see Network Address
+  ;;  01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 00 00 - Sender address info - see Network Address
+  ;;  3B 2E B3 5D 8C E6 17 65                                                       - Node ID
+  ;;  0F 2F 53 61 74 6F 73 68 69 3A 30 2E 37 2E 32 2F                               - "/Satoshi:0.7.2/" sub-version string (string is 15 bytes long)
+  ;;  C0 3E 03 00                                                                   - Last block sending node has is block #212672
+
+  
+  (= (map str-bytes (encode pm/bitcoin-network-message
+                            {:command "version"
+                             :magic :magic-value
+                             :version 60001
+                             :services 1
+                             :timestamp 0x50D0B211
+                             :addr-recv [1 "0.0.0.0" 0]
+                             :addr-from [1 "0.0.0.0" 0]
+                             :nonce 0x6517E68C5DB32E3B
+                             :user-agent "/Satoshi:0.7.2/"
+                             :start-height 212672
+                             :relay true}))
+     '("F9 BE B4 D9"
+       "65"
+       "76 65 72 73 69 6F 6E 00 00 00 00 00"
+       "85 27 39 E3"
+       "61 EA 00 00"
+       "01 00 00 00 00 00 00 00"
+       "11 B2 D0 50 00 00 00 00"
+       "01 00 00 00 00 00 00 00"
+       "00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00"
+       "00 00"
+       "01 00 00 00 00 00 00 00"
+       "00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00"
+       "00 00"
+       "3B 2E B3 5D 8C E6 17 65"
+       "0F"
+       "2F 53 61 74 6F 73 68 69 3A 30 2E 37 2E 32 2F"
+       "C0 3E 03 00"
+       "01")))
 
 
 
