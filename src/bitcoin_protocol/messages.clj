@@ -86,5 +86,41 @@
                                           :start-height :int32-le
                                           :relay relay)))
 
+(def command->payload {"version" version-payload})
+
+(defcodec bitcoin-network-message
+  (header (ordered-map :magic magic
+                       :length varint
+                       :command command
+                       :checksum checksum)
+          (fn [{:keys [command]}]
+            (command->payload command))
+          (fn [{:keys [command magic] :as b}]
+            ;; TODO: Revisit with a header function that passes the
+            ;; raw bytes to body->header. "encoding" should disappear.
+            ;;
+            ;; Also, this is really annoying. The version isn't in the
+            ;; header. How do we handle multiple versions of the
+            ;; bitcoin networking protocol?
+
+            ;; -- johnwalker            
+            
+            (let [encoding (-> command
+                               command->payload
+                               (encode b)
+                               contiguous
+                               .array)]
+              {:magic magic
+               :length (count encoding)
+               :command command
+               :checksum (gen-checksum encoding)}))))
+
+
+
+
+
+
+
+
 
 
