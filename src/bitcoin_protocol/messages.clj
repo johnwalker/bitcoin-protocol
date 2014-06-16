@@ -36,12 +36,12 @@
 
 (defcodec net-addr (compile-frame [:uint64-le
                                    ip-addr
-                                   :uint16-le]))
+                                   :uint16-be]))
 
 (defcodec net-addrt (compile-frame [:uint32-le
                                     :uint64-le
                                     ip-addr
-                                    :uint16-le]))
+                                    :uint16-be]))
 
 (defcodec magic (enum :uint32-le
                       {:magic-value 0xd9b4bef9}))
