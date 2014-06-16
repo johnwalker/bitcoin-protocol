@@ -3,8 +3,6 @@
             [gloss.core :refer :all]
             [gloss.io :refer :all]))
 
-
-
 (let [u16-le (compile-frame :uint16-le)
       u32-le (compile-frame :uint32-le)
       u64-le (compile-frame :uint64-le)]
@@ -86,7 +84,10 @@
                                           :start-height :int32-le
                                           :relay relay)))
 
-(def command->payload {"version" version-payload})
+(defcodec verack-payload nil-frame)
+
+(def command->payload {"version" version-payload
+                       "verack" verack-payload})
 
 (defcodec bitcoin-network-message
   (header (ordered-map :magic magic
@@ -105,11 +106,14 @@
 
             ;; -- johnwalker            
             
-            (let [encoding (-> command
-                               command->payload
-                               (encode b)
-                               contiguous
-                               .array)]
+            (let [first-encoding (-> command
+                                     command->payload
+                                     (encode b))
+
+                  ;; Keeps the empty payload case from exploding.
+                  second-encoding (if first-encoding
+                                    (-> first-encoding contiguous .array)
+                                    (-> [] to-byte-buffer .array))]
               {:magic magic
                :command command
                :length (count second-encoding)
