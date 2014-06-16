@@ -174,10 +174,22 @@
          '("F9 BE B4 D9" 
            "76 65 72 61 63 6B 00 00 00 00 00 00"
            "00"
-           "5D F6 E0 E2")
-         )))
+           "5D F6 E0 E2"))))
 
 
+(deftest addr-message
+  (is (= (map str-bytes (encode pm/bitcoin-network-message {:magic :magic-value
+                                                            :command "addr"
+                                                            :payload [[0x4D1015E2 1 "10.0.0.1" 8333]]}))
+         '("F9 BE B4 D9"
+           "61 64 64 72 00 00 00 00 00 00 00 00"
+           "1F"
+           "ED 52 39 9B"
+           "01"
+           "E2 15 10 4D"
+           "01 00 00 00 00 00 00 00"
+           "00 00 00 00 00 00 00 00 00 00 FF FF 0A 00 00 01"
+           "20 8D"))))
 
 
 
