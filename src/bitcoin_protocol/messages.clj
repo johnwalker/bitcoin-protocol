@@ -86,8 +86,13 @@
 
 (defcodec verack-payload nil-frame)
 
+(defcodec addr-payload (compile-frame (ordered-map :payload (repeated net-addrt :prefix varint))))
+
 (def command->payload {"version" version-payload
-                       "verack" verack-payload})
+                       "verack" verack-payload
+                       "addr"  addr-payload})
+
+
 
 (defcodec bitcoin-network-message
   (header (ordered-map :magic magic
@@ -118,8 +123,6 @@
                :command command
                :length (count second-encoding)
                :checksum (gen-checksum second-encoding)}))))
-
-
 
 
 
