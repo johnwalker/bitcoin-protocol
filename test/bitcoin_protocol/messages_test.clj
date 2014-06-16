@@ -67,26 +67,6 @@
 
 
 (deftest version-payload
-  ;; Personal example
-  (is (= (->> {:version 1 :services 1 :timestamp 1 :addr-recv [5 5 "125.165.1.1" 8080] :addr-from [5 15 "125.165.1.1" 8080] :nonce 5 :user-agent "hi" :start-height 5 :relay true}
-              (encode pm/version-payload)
-              (map str-bytes))
-         '("01 00 00 00"
-           "01 00 00 00 00 00 00 00"
-           "01 00 00 00 00 00 00 00"
-           "05 00 00 00"
-           "05 00 00 00 00 00 00 00"
-           "00 00 00 00 00 00 00 00 00 00 FF FF 7D A5 01 01"
-           "90 1F"
-           "05 00 00 00"
-           "0F 00 00 00 00 00 00 00"
-           "00 00 00 00 00 00 00 00 00 00 FF FF 7D A5 01 01"
-           "90 1F"
-           "05 00 00 00 00 00 00 00"
-           "02"
-           "68 69"
-           "05 00 00 00"
-           "01")))
   ;; Example #1 on Wiki (with relay codec appended to end)
   ;; 0000   f9 be b4 d9 76 65 72 73 69 6f 6e 00 00 00 00 00  ....version.....
   ;; 0010   64 00 00 00 35 8d 49 32 62 ea 00 00 01 00 00 00  d...5.I2b.......
@@ -113,18 +93,16 @@
   ;; 0F 2F 53 61 74 6F 73 68 69 3A 30 2E 37 2E 32 2F                               - "/Satoshi:0.7.2/" sub-version string (string is 15 bytes long)
   ;; C0 3E 03 00                                                                   - Last block sending node has is block #212672
 
-  (is (= (->> {:version 60002 :services 1 :timestamp 1355854353 :addr-recv [1 0 "0.0.0.0" 0] :addr-from [1 0 "0.0.0.0" 0] :nonce 7284544412836900411 :user-agent "/Satoshi:0.7.2/" :start-height 212672 :relay true}
+  (is (= (->> {:version 60002 :services 1 :timestamp 1355854353 :addr-recv [1 "0.0.0.0" 0] :addr-from [1 "0.0.0.0" 0] :nonce 7284544412836900411 :user-agent "/Satoshi:0.7.2/" :start-height 212672 :relay true}
               (encode pm/version-payload)
               (map str-bytes))
          '("62 EA 00 00"
            "01 00 00 00 00 00 00 00"
            "11 B2 D0 50 00 00 00 00"
-           "01 00 00 00"
-           "00 00 00 00 00 00 00 00"
+           "01 00 00 00 00 00 00 00"
            "00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00"
            "00 00"
-           "01 00 00 00"
-           "00 00 00 00 00 00 00 00"
+           "01 00 00 00 00 00 00 00"
            "00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00"
            "00 00"
            "3B 2E B3 5D 8C E6 17 65"
