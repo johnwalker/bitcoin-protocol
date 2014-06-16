@@ -111,9 +111,9 @@
                                contiguous
                                .array)]
               {:magic magic
-               :length (count encoding)
                :command command
-               :checksum (gen-checksum encoding)}))))
+               :length (count second-encoding)
+               :checksum (gen-checksum second-encoding)}))))
 
 
 
