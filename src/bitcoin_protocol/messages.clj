@@ -88,11 +88,18 @@
 
 (defcodec addr-payload (compile-frame (ordered-map :payload (repeated net-addrt :prefix varint))))
 
+(defcodec getaddr-payload nil-frame)
+
+(defcodec ping-payload :uint64-le)
+
+(defcodec pong-payload :uint64-le)
+
 (def command->payload {"version" version-payload
                        "verack" verack-payload
-                       "addr"  addr-payload})
-
-
+                       "addr"  addr-payload
+                       "getaddr" getaddr-payload
+                       "ping" ping-payload
+                       "pong" pong-payload})
 
 (defcodec bitcoin-network-message
   (header (ordered-map :magic magic
