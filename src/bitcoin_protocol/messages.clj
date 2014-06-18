@@ -1,4 +1,4 @@
-(ns bitcoin-protocol.messages 
+(ns bitcoin-protocol.messages
   (:require [clojure.string :as str]
             [gloss.core :refer :all]
             [gloss.io :refer :all]))
@@ -32,7 +32,7 @@
                                             #(Integer/parseInt %)
                                             (clojure.string/split s #"\."))))
                                  (fn [b]
-                                   (apply str (interpose "." (take-last 4 b)))))) 
+                                   (apply str (interpose "." (take-last 4 b))))))
 
 (defcodec net-addr (compile-frame [:uint64-le
                                    ip-addr
@@ -48,7 +48,7 @@
 
 
 
-(defcodec command (compile-frame 
+(defcodec command (compile-frame
                    (string :ascii :length 12)
                    (fn [s]
                      (->> 0 char
@@ -94,12 +94,41 @@
 
 (defcodec pong-payload :uint64-le)
 
+(def reject-keyword->value {:malformed 0x01
+                            :invalid 0x10
+                            :obsolete 0x11
+                            :duplicate 0x12
+                            :nonstandard 0x40
+                            :dust 0x41
+                            :insufficient-fee 0x42
+                            :checkpoint 0x43})
+
+(def reject-keyword->str {:malformed "REJECT_MALFORMED"
+                          :invalid "REJECT_INVALID"
+                          :obsolete "REJECT_OBSOLETE"
+                          :duplicate "REJECT_DUPLICATE"
+                          :nonstandard "REJECT_NONSTANDARD"
+                          :dust "REJECT_DUST"
+                          :insufficient-fee "REJECT_INSUFFICIENTFEE"
+                          :checkpoint "REJECT_CHECKPOINT"})
+
+(defcodec reject-payload (compile-frame (ordered-map :message varstr
+                                                     :code :byte
+                                                     :reason varstr)))
+
+(defn keyword+message->reject-map [k message]
+  (when-let [code (k reject-keyword->value)]
+    {:message message
+     :code    (k reject-keyword->value)
+     :reason  (k reject-keyword->str)}))
+
 (def command->payload {"version" version-payload
                        "verack" verack-payload
                        "addr"  addr-payload
                        "getaddr" getaddr-payload
                        "ping" ping-payload
-                       "pong" pong-payload})
+                       "pong" pong-payload
+                       "reject" reject-payload})
 
 (defcodec bitcoin-network-message
   (header (ordered-map :magic magic
@@ -116,8 +145,8 @@
             ;; header. How do we handle multiple versions of the
             ;; bitcoin networking protocol?
 
-            ;; -- johnwalker            
-            
+            ;; -- johnwalker
+
             (let [first-encoding (-> command
                                      command->payload
                                      (encode b))
@@ -130,11 +159,3 @@
                :command command
                :length (count second-encoding)
                :checksum (gen-checksum second-encoding)}))))
-
-
-
-
-
-
-
-
