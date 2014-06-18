@@ -60,7 +60,7 @@
   (is (= (-> pm/checksum
              (encode (->> "hello"
                           .getBytes
-                          pm/gen-checksum))
+                          (pm/gen-checksum 4)))
              first
              str-bytes)
          "95 95 C9 DF")))
