@@ -27,9 +27,7 @@
                                  (string :ascii))
                                 identity
                                 (fn [s]
-                                  (if (nil? s)
-                                    ""
-                                    s))))
+                                  (or s ""))))
 
 (defcodec ip-addr (compile-frame (repeated :ubyte :prefix :none)
                                  (fn [s]
