@@ -45,6 +45,13 @@
     ;; Char array of "/Satoshi:0.7.2/" is correct
     (is (= (str-bytes satoshi-str) "2F 53 61 74 6F 73 68 69 3A 30 2E 37 2E 32 2F"))))
 
+
+(defspec isomorphic-varstr
+  150
+  (prop/for-all [s gen/string-ascii]
+                (= s (decode pm/varstr (encode pm/varstr s)))))
+
+
 (deftest raw-netaddrt-encoding
   (let [[nettime
          services
