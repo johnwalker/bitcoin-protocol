@@ -84,6 +84,13 @@
          "95 95 C9 DF")))
 
 
+(defspec isomorphic-checksum
+  150
+  (prop/for-all [i (gen/vector gen/byte 4)]
+                (let [ubv (mapv #(bit-and % 0xFF) i)]
+                  (= ubv (decode pm/checksum (encode pm/checksum ubv))))))
+
+
 (deftest version-payload
   ;; Example #1 on Wiki (with relay codec appended to end)
   ;; 0000   f9 be b4 d9 76 65 72 73 69 6f 6e 00 00 00 00 00  ....version.....
