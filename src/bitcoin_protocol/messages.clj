@@ -140,36 +140,33 @@
                        "pong" pong-payload
                        "reject" reject-payload})
 
-(defcodec bitcoin-network-message
-  (header (ordered-map :magic magic
-                       :command command
-                       :length varint
-                       :checksum checksum)
-          (fn [{:keys [command]}]
-            (command->payload command))
-          (fn [{:keys [command magic] :as b}]
-            ;; TODO: Revisit with a header function that passes the
-            ;; raw bytes to body->header. "encoding" should disappear.
-            ;;
-            ;; Also, this is really annoying. The version isn't in the
-            ;; header. How do we handle multiple versions of the
-            ;; bitcoin networking protocol?
+(let [empty-byte-array (-> [] to-byte-buffer .array)]
+  (defcodec bitcoin-network-message
+    (header (ordered-map :magic magic
+                         :command command
+                         :length varint
+                         :checksum checksum)
+            (fn [{:keys [command]}]
+              (command->payload command))
+            (fn [{:keys [command magic] :as b}]
+              ;; TODO: Revisit with a header function that passes the
+              ;; raw bytes to body->header. "encoding" should disappear.
+              ;;
+              ;; Also, this is really annoying. The version isn't in the
+              ;; header. How do we handle multiple versions of the
+              ;; bitcoin networking protocol?
 
-            ;; -- johnwalker
+              ;; -- johnwalker
 
-            (let [first-encoding (-> command
-                                     command->payload
-                                     (encode b))
+              (let [first-encoding (-> command
+                                       command->payload
+                                       (encode b))
 
-                  ;; Keeps the empty payload case from exploding.
-                  second-encoding (if first-encoding
-                                    (-> first-encoding contiguous .array)
-                                    (-> [] to-byte-buffer .array))]
-              {:magic magic
-               :command command
-               :length (count second-encoding)
-               :checksum (gen-checksum 4 second-encoding)}))))
-
-
-
-
+                    ;; Keeps the empty payload case from exploding.
+                    second-encoding (if first-encoding
+                                      (-> first-encoding contiguous .array)
+                                      empty-byte-array)]
+                {:magic magic
+                 :command command
+                 :length (count second-encoding)
+                 :checksum (gen-checksum 4 second-encoding)})))))
