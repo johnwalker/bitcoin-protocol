@@ -22,6 +22,7 @@
                                0xffffffff 0xfe
                                0xff)))))
 
+
 (defcodec varstr (compile-frame (finite-frame
                                  varint
                                  (string :ascii))
@@ -29,7 +30,8 @@
                                 (fn [s]
                                   (or s ""))))
 
-(defcodec ip-addr (compile-frame (repeated :ubyte :prefix :none)
+
+(defcodec ip-addr (compile-frame (repeat 16 :ubyte)
                                  (fn [s]
                                    (concat (repeat 10 0)
                                            (repeat 2 0xFF)
@@ -39,14 +41,17 @@
                                  (fn [b]
                                    (apply str (interpose "." (take-last 4 b))))))
 
-(defcodec net-addr (compile-frame [:uint64-le
-                                   ip-addr
-                                   :uint16-be]))
+(defcodec net-addr (ordered-map
+                    :services :uint64-le
+                    :ip ip-addr
+                    :port :uint16-be))
 
-(defcodec net-addrt (compile-frame [:uint32-le
-                                    :uint64-le
-                                    ip-addr
-                                    :uint16-be]))
+
+(defcodec net-addrt (ordered-map :time :uint32-le
+                                 :services :uint64-le
+                                 :ip ip-addr
+                                 :port :uint16-be))
+
 
 (defcodec magic (enum :uint32-le
                       {:magic-value 0xd9b4bef9}))
@@ -164,3 +169,7 @@
                :command command
                :length (count second-encoding)
                :checksum (gen-checksum 4 second-encoding)}))))
+
+
+
+
