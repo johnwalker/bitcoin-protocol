@@ -52,6 +52,14 @@
                 (= s (decode pm/varstr (encode pm/varstr s)))))
 
 
+(defspec isomorphic-ipaddr
+  150
+  (prop/for-all [ip (gen/vector gen/byte 4)]
+                (let [ubv (mapv #(bit-and % 0xFF) ip)
+                      ip-str (apply str (interpose "." ubv))]
+                  (= ip-str (decode pm/ip-addr (encode pm/ip-addr ip-str))))))
+
+
 (deftest raw-netaddrt-encoding
   (let [[nettime
          services
