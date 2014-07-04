@@ -12,7 +12,9 @@
                                0xfd u16-le
                                0xfe u32-le
                                0xff u64-le
-                               nil-frame))
+                               (compile-frame nil-frame
+                                              identity
+                                              (constantly h))))
                            (fn [b]
                              (condp >= b
                                0xfc b
