@@ -1,5 +1,9 @@
 (ns bitcoin-protocol.messages_test
   (:require [clojure.test :refer :all]
+            [clojure.test.check :as tc]
+            [clojure.test.check.clojure-test :refer [defspec]]
+            [clojure.test.check.generators :as gen]
+            [clojure.test.check.properties :as prop]
             [bitcoin-protocol.messages :as pm]
             [gloss.io :refer :all]))
 
@@ -26,6 +30,13 @@
   (is (= (str-bytes (first (encode pm/varint 0xFFFFFFFF))) "FE FF FF FF FF"))
   (is (= (str-bytes (first (encode pm/varint 0x100000000))) "FF 00 00 00 00 01 00 00 00"))
   (is (= (str-bytes (first (encode pm/varint 0xFFFFFFFFFF))) "FF FF FF FF FF FF 00 00 00")))
+
+
+(defspec isomorphic-varint
+  150
+  (prop/for-all [i gen/pos-int]
+                (= i (decode pm/varint (encode pm/varint i)))))
+
 
 (deftest raw-varstr-encoding
   (let [[satoshi-varint satoshi-str] (encode pm/varstr "/Satoshi:0.7.2/")]
@@ -130,7 +141,7 @@
   ;;  0F 2F 53 61 74 6F 73 68 69 3A 30 2E 37 2E 32 2F                               - "/Satoshi:0.7.2/" sub-version string (string is 15 bytes long)
   ;;  C0 3E 03 00                                                                   - Last block sending node has is block #212672
 
-  
+
   (= (map str-bytes (encode pm/bitcoin-network-message
                             {:command "version"
                              :magic :magic-value
@@ -167,11 +178,11 @@
   ;;  F9 BE B4 D9                          - Main network magic bytes
   ;;  76 65 72 61  63 6B 00 00 00 00 00 00 - "verack" command
   ;;  00 00 00 00                          - Payload is 0 bytes long
-  ;;  5D F6 E0 E2                          - Checksum  
+  ;;  5D F6 E0 E2                          - Checksum
   (is (= (map str-bytes (encode pm/bitcoin-network-message
                                 {:magic :magic-value
                                  :command "verack"}))
-         '("F9 BE B4 D9" 
+         '("F9 BE B4 D9"
            "76 65 72 61 63 6B 00 00 00 00 00 00"
            "00"
            "5D F6 E0 E2"))))
@@ -190,9 +201,3 @@
            "01 00 00 00 00 00 00 00"
            "00 00 00 00 00 00 00 00 00 00 FF FF 0A 00 00 01"
            "20 8D"))))
-
-
-
-
-
-
