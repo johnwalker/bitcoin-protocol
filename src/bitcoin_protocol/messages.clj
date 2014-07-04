@@ -22,9 +22,14 @@
                                0xffffffff 0xfe
                                0xff)))))
 
-(defcodec varstr (finite-frame
-                  varint
-                  (string :ascii)))
+(defcodec varstr (compile-frame (finite-frame
+                                 varint
+                                 (string :ascii))
+                                identity
+                                (fn [s]
+                                  (if (nil? s)
+                                    ""
+                                    s))))
 
 (defcodec ip-addr (compile-frame (repeated :ubyte :prefix :none)
                                  (fn [s]
