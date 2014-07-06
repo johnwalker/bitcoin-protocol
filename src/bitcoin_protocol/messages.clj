@@ -54,8 +54,10 @@
 
 
 (defcodec magic (enum :uint32-le
-                      {:magic-value 0xd9b4bef9}))
-
+                      {:main 0xd9b4bef9
+                       :namecoin 0xfeb4bef9
+                       :testnet 0xdab5bffa
+                       :testnet3 0x0709110b}))
 
 
 (defcodec command (compile-frame
