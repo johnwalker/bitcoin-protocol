@@ -1,4 +1,4 @@
-(defproject com.github.johnwalker/bitcoin-protocol "0.15.0-SNAPSHOT"
+(defproject com.github.johnwalker/bitcoin-protocol "0.16.0-SNAPSHOT"
   :description "FIXME: write description"
   :url "http://example.com/FIXME"
   :license {:name "Eclipse Public License"
