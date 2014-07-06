@@ -124,11 +124,13 @@
                           :insufficient-fee "REJECT_INSUFFICIENTFEE"
                           :checkpoint "REJECT_CHECKPOINT"})
 
+
 (defcodec reject-payload (compile-frame (ordered-map :message varstr
                                                      :code :byte
                                                      :reason varstr)))
 
-(defn keyword+message->reject-map [k message]
+
+(defn reject-map [k message]
   (when-let [code (k reject-keyword->value)]
     {:message message
      :code    (k reject-keyword->value)
