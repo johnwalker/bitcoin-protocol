@@ -39,7 +39,7 @@
                                            (repeat 2 0xFF)
                                            (map
                                             #(Integer/parseInt %)
-                                            (clojure.string/split s #"\."))))
+                                            (str/split s #"\."))))
                                  (fn [b]
                                    (apply str (interpose "." (take-last 4 b))))))
 
