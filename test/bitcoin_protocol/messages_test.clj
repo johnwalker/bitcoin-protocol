@@ -185,7 +185,7 @@
 
   (= (apply str (interpose " " (map str-bytes (encode pm/bitcoin-network-message
                                                       {:command "version"
-                                                       :magic :magic-value
+                                                       :magic :main
                                                        :version 60001
                                                        :services 1
                                                        :timestamp 0x50D0B211
@@ -222,7 +222,7 @@
   ;;  00 00 00 00                          - Payload is 0 bytes long
   ;;  5D F6 E0 E2                          - Checksum
   (is (= (map str-bytes (encode pm/bitcoin-network-message
-                                {:magic :magic-value
+                                {:magic :main
                                  :command "verack"}))
          '("F9 BE B4 D9"
            "76 65 72 61 63 6B 00 00 00 00 00 00"
@@ -231,7 +231,7 @@
 
 
 (deftest addr-message
-  (is (= (apply str (interpose " " (map str-bytes (encode pm/bitcoin-network-message {:magic :magic-value
+  (is (= (apply str (interpose " " (map str-bytes (encode pm/bitcoin-network-message {:magic :main
                                                                                       :command "addr"
                                                                                       :payload [{:time 0x4D1015E2 :services 1 :ip "10.0.0.1" :port 8333}]}))))
          (apply str (interpose " " '("F9 BE B4 D9"
