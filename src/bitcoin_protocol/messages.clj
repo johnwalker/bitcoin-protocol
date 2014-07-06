@@ -172,3 +172,16 @@
                  :command command
                  :length (count second-encoding)
                  :checksum (gen-checksum 4 second-encoding)})))))
+
+
+(defn write-message
+  "Write a bitcoin network message"
+  [m]
+  ;; TODO - asserts
+  (encode bitcoin-network-message m))
+
+
+(defn read-message
+  "Read a bitcoin network message"
+  [x]
+  (decode bitcoin-network-message x))
