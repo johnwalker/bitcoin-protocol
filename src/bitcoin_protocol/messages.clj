@@ -102,9 +102,9 @@
 
 (defcodec getaddr-payload nil-frame)
 
-(defcodec ping-payload :uint64-le)
+(defcodec ping-payload (ordered-map :payload :uint64-le))
 
-(defcodec pong-payload :uint64-le)
+(defcodec pong-payload (ordered-map :payload :uint64-le))
 
 (def reject-keyword->value {:malformed 0x01
                             :invalid 0x10
