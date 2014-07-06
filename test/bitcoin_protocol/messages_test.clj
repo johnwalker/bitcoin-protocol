@@ -233,7 +233,7 @@
 (deftest addr-message
   (is (= (apply str (interpose " " (map str-bytes (encode pm/bitcoin-network-message {:magic :main
                                                                                       :command "addr"
-                                                                                      :payload [{:time 0x4D1015E2 :services 1 :ip "10.0.0.1" :port 8333}]}))))
+                                                                                      :addrs [{:time 0x4D1015E2 :services 1 :ip "10.0.0.1" :port 8333}]}))))
          (apply str (interpose " " '("F9 BE B4 D9"
                                      "61 64 64 72 00 00 00 00 00 00 00 00"
                                      "1F"
