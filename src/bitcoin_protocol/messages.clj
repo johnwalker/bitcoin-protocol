@@ -99,7 +99,9 @@
 
 (defcodec verack-payload nil-frame)
 
-(defcodec addr-payload (compile-frame (ordered-map :payload (repeated net-addrt :prefix varint))))
+(defcodec addr-payload (compile-frame
+                        (ordered-map :addrs
+                                     (repeated net-addrt :prefix varint))))
 
 (defcodec getaddr-payload nil-frame)
 
@@ -136,6 +138,7 @@
     {:message message
      :code    (k reject-keyword->value)
      :reason  (k reject-keyword->str)}))
+
 
 (def command->payload {"version" version-payload
                        "verack" verack-payload
