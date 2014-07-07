@@ -172,6 +172,7 @@
                        "getaddr" getaddr-payload
                        "inv" inv-payload
                        "getdata" inv-payload
+                       "notfound" inv-payload
                        "ping" ping-payload
                        "pong" pong-payload
                        "reject" reject-payload})
