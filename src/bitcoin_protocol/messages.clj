@@ -193,6 +193,15 @@
                                     identity))
 
 
+(defcodec block-header (compile-frame (ordered-map :version :uint32-le
+                                                   :prev-block (repeat 32 :byte)
+                                                   :merkle-root (repeat 32 :byte)
+                                                   :timestamp :uint32-le
+                                                   :bits :uint32-le
+                                                   :nonce :uint32-le
+                                                   :txn-count varint)))
+
+
 (defn write-message
   "Write a bitcoin network message"
   [m]
