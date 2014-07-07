@@ -140,11 +140,37 @@
      :code    (k reject-keyword->value)
      :reason  (k reject-keyword->str)}))
 
+(defcodec inv-vector (compile-frame (ordered-map :type (enum :uint32-le
+                                                             {:error 0
+                                                              :msg-tx 1
+                                                              :msg-block 2})
+                                                 :hash (repeat 32 :byte))
+                                    (fn [{:keys [type bytes]}]
+                                      {:type type
+                                       :hash (gen-checksum 32 bytes)})
+                                    identity))
+
+
+(defcodec block-header (compile-frame (ordered-map :version :uint32-le
+                                                   :prev-block (repeat 32 :byte)
+                                                   :merkle-root (repeat 32 :byte)
+                                                   :timestamp :uint32-le
+                                                   :bits :uint32-le
+                                                   :nonce :uint32-le
+                                                   :txn-count varint)))
+
+
+(defcodec inv-payload (compile-frame
+                       (ordered-map
+                        :inv-vectors (repeated inv-vector
+                                               :prefix varint))))
+
 
 (def command->payload {"version" version-payload
                        "verack" verack-payload
                        "addr"  addr-payload
                        "getaddr" getaddr-payload
+                       "inv" inv-payload
                        "ping" ping-payload
                        "pong" pong-payload
                        "reject" reject-payload})
@@ -182,24 +208,7 @@
                    :checksum (gen-checksum 4 second-encoding)})))))
 
 
-(defcodec inv-vector (compile-frame (ordered-map :type (enum :uint32-le
-                                                             {:error 0
-                                                              :msg-tx 1
-                                                              :msg-block 2})
-                                                 :hash (repeat 32 :byte))
-                                    (fn [{:keys [type bytes]}]
-                                      {:type type
-                                       :hash (gen-checksum 32 bytes)})
-                                    identity))
 
-
-(defcodec block-header (compile-frame (ordered-map :version :uint32-le
-                                                   :prev-block (repeat 32 :byte)
-                                                   :merkle-root (repeat 32 :byte)
-                                                   :timestamp :uint32-le
-                                                   :bits :uint32-le
-                                                   :nonce :uint32-le
-                                                   :txn-count varint)))
 
 
 (defn write-message
