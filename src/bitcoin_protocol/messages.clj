@@ -182,6 +182,17 @@
                    :checksum (gen-checksum 4 second-encoding)})))))
 
 
+(defcodec inv-vector (compile-frame (ordered-map :type (enum :uint32-le
+                                                             {:error 0
+                                                              :msg-tx 1
+                                                              :msg-block 2})
+                                                 :hash (repeat 32 :byte))
+                                    (fn [{:keys [type bytes]}]
+                                      {:type type
+                                       :hash (gen-checksum 32 bytes)})
+                                    identity))
+
+
 (defn write-message
   "Write a bitcoin network message"
   [m]
