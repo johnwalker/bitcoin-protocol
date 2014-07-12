@@ -181,6 +181,12 @@
 (defcodec getheaders-payload getblocks-payload)
 
 
+(defcodec outpoint (ordered-map
+                    :prev-hash (repeat 32 :byte)
+                    :index :uint32-le))
+
+
+
 (def command->payload {"version" version-payload
                        "verack" verack-payload
                        "addr"  addr-payload
