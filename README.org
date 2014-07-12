@@ -1,0 +1,40 @@
+* bitcoin-protocol
+  This is an implementation of the [[https://en.bitcoin.it/wiki/Protocol_specification][Bitcoin networking protocol]]. It can
+  be used to communicate with peers within Bitcoin networks.
+
+  Documentation to come. Mostly untested goodness at the moment.
+
+  #+BEGIN_SRC clojure
+    ;; Latest version on Clojars
+    [com.github.johnwalker/bitcoin-protocol "0.17.0-SNAPSHOT"]
+  #+END_SRC
+
+** Usage
+
+   The two functions you care most about are =write-message= and
+   =read-message.= =write-message= will convert hashmaps to
+   Bytebuffers. =read-message= will bring Bytebuffers back to
+   hashmaps.
+
+*** Build a Version Message
+
+    #+BEGIN_SRC clojure
+      (encode pm/bitcoin-network-message
+	      {:command "version"
+	       :magic :main
+	       :version 60001
+	       :services 1
+	       :timestamp 0x50D0B211
+	       :addr-recv {:services 1 :ip "0.0.0.0" :port 0}
+	       :addr-from {:services 1 :ip "0.0.0.0" :port 0}
+	       :nonce 0x6517E68C5DB32E3B
+	       :user-agent "/Satoshi:0.7.2/"
+	       :start-height 212672
+	       :relay true})
+    #+END_SRC
+
+* License
+
+  Copyright © 2014 John Walker
+
+  Distributed under the Eclipse Public License version 1.0.
