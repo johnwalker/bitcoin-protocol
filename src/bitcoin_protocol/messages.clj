@@ -201,6 +201,17 @@
                       :txin-vec (repeated :byte :prefix txin)
                       :txin-vec (repeated :byte :prefix txout)
                       :lock-time :uint32-le))
+
+
+(defcodec block-payload (ordered-map
+                         :version :uint32-le
+                         :prev-block (repeat 32 :byte)
+                         :merkle-root (repeat 32 :byte)
+                         :timestamp :int32-le
+                         :bits :int32-le
+                         :nonce :int32-le
+                         :txns (repeated tx-payload :prefix varint)))
+
 (def command->payload {"version" version-payload
                        "verack" verack-payload
                        "addr"  addr-payload
