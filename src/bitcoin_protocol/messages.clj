@@ -178,6 +178,9 @@
                                                ;; decrement the varint prefix.
                                                :prefix varint)))
 
+(defcodec getheaders-payload getblocks-payload)
+
+
 (def command->payload {"version" version-payload
                        "verack" verack-payload
                        "addr"  addr-payload
