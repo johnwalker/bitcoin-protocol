@@ -212,6 +212,23 @@
                          :nonce :int32-le
                          :txns (repeated tx-payload :prefix varint)))
 
+
+(defcodec alert-payload (ordered-map
+                         :version :int32-le
+                         :relay-until :int64-le
+                         :expiration :int64-le
+                         :id :int32-le
+                         :cancel :int32-le
+                         :set-cancel (repeated :int32-le :prefix varint)
+                         :min-ver :int32-le
+                         :max-ver :int32-le
+                         :set-subver (repeated varstr :prefix varint)
+                         :priority :int32-le
+                         :comment varstr
+                         :status-bar varstr
+                         :reserved varstr))
+
+
 (def command->payload {"version" version-payload
                        "verack" verack-payload
                        "addr"  addr-payload
