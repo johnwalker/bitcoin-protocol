@@ -165,6 +165,11 @@
                         :inv-vectors (repeated inv-vector
                                                :prefix varint))))
 
+(defcodec getdata-payload inv-payload)
+
+(defcodec notfound-payload inv-payload)
+
+
 
 (def command->payload {"version" version-payload
                        "verack" verack-payload
