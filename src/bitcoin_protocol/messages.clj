@@ -232,6 +232,8 @@
 (def command->payload {"version" version-payload
                        "verack" verack-payload
                        "addr"  addr-payload
+                       "alert" alert-payload
+                       "block" block-payload
                        "getaddr" getaddr-payload
                        "inv" inv-payload
                        "getdata" getdata-payload
