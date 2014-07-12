@@ -196,6 +196,11 @@
                  :pk-script (repeated :byte :prefix varint)))
 
 
+(defcodec tx-payload (ordered-map
+                      :version :uint32-le
+                      :txin-vec (repeated :byte :prefix txin)
+                      :txin-vec (repeated :byte :prefix txout)
+                      :lock-time :uint32-le))
 (def command->payload {"version" version-payload
                        "verack" verack-payload
                        "addr"  addr-payload
