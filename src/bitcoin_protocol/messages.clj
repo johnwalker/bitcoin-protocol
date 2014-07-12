@@ -212,7 +212,8 @@
                        "getheaders" getheaders-payload
                        "ping" ping-payload
                        "pong" pong-payload
-                       "reject" reject-payload})
+                       "reject" reject-payload
+                       "tx" tx-payload})
 
 (let [empty-byte-array (-> [] to-byte-buffer .array)]
   (defcodec bitcoin-network-message
