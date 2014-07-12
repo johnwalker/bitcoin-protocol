@@ -186,8 +186,10 @@
                        "addr"  addr-payload
                        "getaddr" getaddr-payload
                        "inv" inv-payload
-                       "getdata" inv-payload
-                       "notfound" inv-payload
+                       "getdata" getdata-payload
+                       "notfound" notfound-payload
+                       "getblocks" getblocks-payload
+                       "getheaders" getheaders-payload
                        "ping" ping-payload
                        "pong" pong-payload
                        "reject" reject-payload})
