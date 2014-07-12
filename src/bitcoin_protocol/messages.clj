@@ -185,6 +185,10 @@
                     :prev-hash (repeat 32 :byte)
                     :index :uint32-le))
 
+(defcodec txin (ordered-map
+                :previous outpoint
+                :signature-script (repeated :byte :prefix varint)
+                :sequence :uint32-le))
 
 
 (def command->payload {"version" version-payload
