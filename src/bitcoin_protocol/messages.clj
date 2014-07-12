@@ -170,6 +170,13 @@
 (defcodec notfound-payload inv-payload)
 
 
+(defcodec getblocks-payload (ordered-map
+                             :version :uint32-le
+                             :hashes (repeated inv-vector
+                                               ;; The spec isn't clear here.
+                                               ;; It might be necessary to
+                                               ;; decrement the varint prefix.
+                                               :prefix varint)))
 
 (def command->payload {"version" version-payload
                        "verack" verack-payload
