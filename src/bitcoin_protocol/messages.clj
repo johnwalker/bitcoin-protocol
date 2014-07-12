@@ -190,6 +190,11 @@
                 :signature-script (repeated :byte :prefix varint)
                 :sequence :uint32-le))
 
+(defcodec txout (ordered-map
+                 :value :int64-le
+                 ;; I'm pretending uchars don't exist for now
+                 :pk-script (repeated :byte :prefix varint)))
+
 
 (def command->payload {"version" version-payload
                        "verack" verack-payload
