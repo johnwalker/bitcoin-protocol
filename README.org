@@ -3,7 +3,9 @@
   [[img/millions.jpg]]
 
   This is an implementation of the [[https://en.bitcoin.it/wiki/Protocol_specification][Bitcoin networking protocol]]. It can
-  be used to communicate with peers within Bitcoin networks.
+  be used to communicate with peers within Bitcoin networks. The
+  library handles deterministic fields like checksums and lengths, but
+  the programmer must specify non-deterministic fields like nonces.
 
   Documentation to come. Mostly untested goodness at the moment.
 
