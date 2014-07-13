@@ -278,14 +278,11 @@
                    :checksum (gen-checksum 4 second-encoding)})))))
 
 
-
-
-
 (defn write-message
   "Write a bitcoin network message"
   [m]
   ;; TODO - asserts
-  (encode bitcoin-network-message m))
+  (contiguous (encode bitcoin-network-message m)))
 
 
 (defn read-message
