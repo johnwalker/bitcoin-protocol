@@ -11,7 +11,7 @@
 
   #+BEGIN_SRC clojure
     ;; Latest version on Clojars
-    [com.github.johnwalker/bitcoin-protocol "0.17.0"]
+    [io.johnwalker/bitcoin-protocol "0.17.0"]
   #+END_SRC
 
 ** Examples
@@ -88,7 +88,7 @@ unit tests that demonstrate the failure.
 Presently, =read-message= and =write-message= is expected to work
 for
 
-#+BEGIN_SRC 
+#+BEGIN_SRC
 version
 verack
 addr
@@ -101,7 +101,7 @@ reject
 
 while these are around, but are untested.
 
-#+BEGIN_SRC 
+#+BEGIN_SRC
 alert
 block
 getdata
