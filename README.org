@@ -10,8 +10,8 @@
   Documentation to come. Mostly untested goodness at the moment.
 
   #+BEGIN_SRC clojure
-    ;; Latest version on Clojars
-    [io.johnwalker/bitcoin-protocol "0.17.0"]
+;; Latest version on Clojars
+[io.johnwalker/bitcoin-protocol "0.17.0"]
   #+END_SRC
 
 ** Examples
@@ -24,22 +24,22 @@
 *** Build a version message
 
     #+BEGIN_SRC clojure
-      (require '[bitcoin-protocol.messages :refer [write-message read-message]])
+(require '[bitcoin-protocol.messages :refer [write-message read-message]])
 
-      (def my-version-messages (write-message
-                                {:command "version"
-                                 :magic :main
-                                 :version 60001
-                                 :services 1
-                                 :timestamp 0x50D0B211
-                                 :addr-recv {:services 1 :ip "0.0.0.0" :port 0}
-                                 :addr-from {:services 1 :ip "0.0.0.0" :port 0}
-                                 :nonce 0x6517E68C5DB32E3B
-                                 :user-agent "/Satoshi:0.7.2/"
-                                 :start-height 212672
-                                 :relay true}))
+(def my-version-messages (write-message
+                          {:command "version"
+                           :magic :main
+                           :version 60001
+                           :services 1
+                           :timestamp 0x50D0B211
+                           :addr-recv {:services 1 :ip "0.0.0.0" :port 0}
+                           :addr-from {:services 1 :ip "0.0.0.0" :port 0}
+                           :nonce 0x6517E68C5DB32E3B
+                           :user-agent "/Satoshi:0.7.2/"
+                           :start-height 212672
+                           :relay true}))
 
-      ;; #<HeapByteBuffer java.nio.HeapByteBuffer[pos=0 lim=122 cap=122]>
+;; #<HeapByteBuffer java.nio.HeapByteBuffer[pos=0 lim=122 cap=122]>
     #+END_SRC
 
 *** Read the version message back
@@ -47,22 +47,22 @@
     and so forth.
 
     #+BEGIN_SRC clojure
-      (def read-it-back (read-message my-version-message))
+(def read-it-back (read-message my-version-message))
     #+END_SRC
     #+BEGIN_SRC clojure
-      {:addr-from {:port 0 :ip "0.0.0.0" :services 1N}
-       :user-agent "/Satoshi:0.7.2/"
-       :command "version"
-       :magic :main
-       :start-height 212672
-       :relay true
-       :checksum [133 39 57 227]
-       :length 101
-       :version 60001
-       :timestamp 1355854353
-       :nonce 7284544412836900411N
-       :services 1N
-       :addr-recv {:port 0 :ip "0.0.0.0" :services 1N}
+{:addr-from {:port 0 :ip "0.0.0.0" :services 1N}
+ :user-agent "/Satoshi:0.7.2/"
+ :command "version"
+ :magic :main
+ :start-height 212672
+ :relay true
+ :checksum [133 39 57 227]
+ :length 101
+ :version 60001
+ :timestamp 1355854353
+ :nonce 7284544412836900411N
+ :services 1N
+ :addr-recv {:port 0 :ip "0.0.0.0" :services 1N}
     #+END_SRC
 
 *** Verify the insides
@@ -70,25 +70,25 @@
     are easy to see (and there are better formatters in Clojure land).
 
     #+BEGIN_SRC clojure
-  (defn- str-bytes [h]
-	 (clojure.string/trimr
-	  (apply str
-		 (for [x (range (.remaining h))]
-		   (format "%02X " (.get h x))))))
+(defn- str-bytes [h]
+  (clojure.string/trimr
+   (apply str
+          (for [x (range (.remaining h))]
+            (format "%02X " (.get h x))))))
 
-  (def raw-bytes (str-bytes my-version-message)
-#+END_SRC
+(def raw-bytes (str-bytes my-version-message)
+    #+END_SRC
 
 *** The Rest
-Everything else works just like the version message. Some of them
-haven't been tested yet, however. If you run into an error, please
-report it to me. I'll be especially happy to accept =test.check= or
-unit tests that demonstrate the failure.
+    Everything else works just like the version message. Some of them
+    haven't been tested yet, however. If you run into an error, please
+    report it to me. I'll be especially happy to accept =test.check= or
+    unit tests that demonstrate the failure.
 
-Presently, =read-message= and =write-message= is expected to work
-for
+    Presently, =read-message= and =write-message= is expected to work
+    for
 
-#+BEGIN_SRC
+    #+BEGIN_SRC
 version
 verack
 addr
@@ -97,11 +97,11 @@ inv
 ping
 pong
 reject
-#+END_SRC
+    #+END_SRC
 
-while these are around, but are untested.
+    while these are around, but are untested.
 
-#+BEGIN_SRC
+    #+BEGIN_SRC
 alert
 block
 getdata
@@ -109,7 +109,7 @@ notfound
 getblocks
 getheaders
 tx
-#+END_SRC
+    #+END_SRC
 
 * License
 
