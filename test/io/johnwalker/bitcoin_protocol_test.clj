@@ -1,10 +1,10 @@
-(ns bitcoin-protocol.messages_test
+(ns io.johnwalker.bitcoin-protocol_test
   (:require [clojure.test :refer :all]
             [clojure.test.check :as tc]
             [clojure.test.check.clojure-test :refer [defspec]]
             [clojure.test.check.generators :as gen]
             [clojure.test.check.properties :as prop]
-            [bitcoin-protocol.messages :as pm]
+            [io.johnwalker.bitcoin-protocol :as pm]
             [gloss.io :refer :all]))
 
 (defn- str-bytes [h]

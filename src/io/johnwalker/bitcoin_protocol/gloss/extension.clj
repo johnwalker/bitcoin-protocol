@@ -1,5 +1,5 @@
-(ns bitcoin-protocol.gloss.extension
-  (:require [bitcoin-protocol.gloss.extension.codecs :as codecs]
+(ns  io.johnwalker.bitcoin-protocol.gloss.extension
+  (:require [io.johnwalker.bitcoin-protocol.gloss.extension.codecs :as codecs]
             [gloss.core :refer [compile-frame]]))
 
 (defn header

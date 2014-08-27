@@ -1,4 +1,4 @@
-(defproject io.johnwalker/bitcoin-protocol "0.17.0"
+(defproject io.johnwalker/bitcoin-protocol "0.17.1"
   :description "An implementation of the Bitcoin networking protocol."
   :url "https://github.com/johnwalker/bitcoin-protocol"
   :license {:name "Eclipse Public License"

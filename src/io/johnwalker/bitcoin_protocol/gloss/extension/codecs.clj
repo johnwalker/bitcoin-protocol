@@ -1,4 +1,4 @@
-(ns bitcoin-protocol.gloss.extension.codecs
+(ns io.johnwalker.bitcoin-protocol.gloss.extension.codecs
   (:use [gloss.data bytes string primitives]
         [gloss.core protocols structure formats])
   (:require [gloss.core :refer [ordered-map]]))
