@@ -248,7 +248,7 @@
   (defcodec bitcoin-network-message
     (e/header (ordered-map :magic magic
                            :command command
-                           :length varint
+                           :length :uint32-le
                            :checksum checksum)
               (fn [{:keys [command]}]
                 (-> command name command->payload))
