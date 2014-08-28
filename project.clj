@@ -5,5 +5,5 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [gloss "0.2.2"]]
-  :profiles {:dev {:dependencies [[org.clojure/tools.namespace "0.2.4"]
-                                  [org.clojure/test.check "0.5.8"]]}})
+  :profiles {:dev {:dependencies [[org.clojure/tools.namespace "0.2.5"]
+                                  [org.clojure/test.check "0.5.9"]]}})
