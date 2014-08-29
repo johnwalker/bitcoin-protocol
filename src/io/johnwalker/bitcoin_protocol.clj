@@ -288,5 +288,3 @@
   "Read a bitcoin network message"
   [x]
   (decode bitcoin-network-message x))
-
-(def ^{:deprecated "0.0.1"} foo "5")
