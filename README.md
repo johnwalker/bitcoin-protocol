@@ -19,7 +19,7 @@ Documentation to come. Mostly untested goodness at the moment.
 
 ```clojure
 ;; Latest version on Clojars
-[io.johnwalker/bitcoin-protocol "0.17.0"]
+[io.johnwalker/bitcoin-protocol "0.17.1"]
 ```
 
 ## Examples<a id="sec-1-1" name="sec-1-1"></a>
@@ -32,7 +32,7 @@ hashmaps.
 ### Build a version message<a id="sec-1-1-1" name="sec-1-1-1"></a>
 
 ```clojure
-(require '[bitcoin-protocol.messages :refer [write-message read-message]])
+(require '[io.johnwalker.bitcoin-protocol :refer [write-message read-message]])
 
 (def my-version-messages (write-message
                           {:command "version"
