@@ -12,7 +12,9 @@
                     (fn [v b]
                       (let [body (header->body v)
                             [success m x] (read-bytes body b)]
-                        [success (merge m v) x])))]
+                        (if (seq x)
+                          [success m x]
+                          [success (merge m v) x]))))]
     (reify
       Reader
       (read-bytes [_ buf-seq]
