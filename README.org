@@ -11,7 +11,7 @@
 
   #+BEGIN_SRC clojure
 ;; Latest version on Clojars
-[io.johnwalker/bitcoin-protocol "0.17.0"]
+[io.johnwalker/bitcoin-protocol "0.17.3"]
   #+END_SRC
 
 ** Examples
