@@ -183,7 +183,7 @@
   ;;  C0 3E 03 00                                                                   - Last block sending node has is block #212672
 
 
-  (= (apply str (interpose " " (map str-bytes (encode pm/bitcoin-network-message
+  (= (apply str (interpose " " (map str-bytes (encode pm/network-protocol
                                                       {:command "version"
                                                        :magic :main
                                                        :version 60001
@@ -221,7 +221,7 @@
   ;;  76 65 72 61  63 6B 00 00 00 00 00 00 - "verack" command
   ;;  00 00 00 00                          - Payload is 0 bytes long
   ;;  5D F6 E0 E2                          - Checksum
-  (is (= (map str-bytes (encode pm/bitcoin-network-message
+  (is (= (map str-bytes (encode pm/network-protocol
                                 {:magic :main
                                  :command "verack"}))
          '("F9 BE B4 D9"
@@ -231,9 +231,9 @@
 
 
 (deftest addr-message
-  (is (= (apply str (interpose " " (map str-bytes (encode pm/bitcoin-network-message {:magic :main
-                                                                                      :command "addr"
-                                                                                      :addrs [{:time 0x4D1015E2 :services 1 :ip "10.0.0.1" :port 8333}]}))))
+  (is (= (apply str (interpose " " (map str-bytes (encode pm/network-protocol {:magic :main
+                                                                               :command "addr"
+                                                                               :addrs [{:time 0x4D1015E2 :services 1 :ip "10.0.0.1" :port 8333}]}))))
          (apply str (interpose " " '("F9 BE B4 D9"
                                      "61 64 64 72 00 00 00 00 00 00 00 00"
                                      "1F 00 00 00"

@@ -1,4 +1,5 @@
 - [bitcoin-protocol](#bitcoin-protocol)
+  - [Usage with Aleph](#usage-with-aleph)
   - [Examples](#examples)
     - [Build a version message](#build-a-version-message)
     - [Read the version message back](#read-the-version-message-back)
@@ -19,17 +20,40 @@ Documentation to come. Mostly untested goodness at the moment.
 
 ```clojure
 ;; Latest version on Clojars
-[io.johnwalker/bitcoin-protocol "0.17.3"]
+[io.johnwalker/bitcoin-protocol "0.17.4"]
 ```
 
-## Examples<a id="sec-1-1" name="sec-1-1"></a>
+## Usage with Aleph<a id="sec-1-1" name="sec-1-1"></a>
+
+[Aleph](https://github.com/ztellman/aleph) has support for decoding of the wire automatically. Suppose
+you are connecting to a Bitcoin peer. Then you can communicate him
+in the usual manner with:
+
+```clojure
+(require '[io.johnwalker/bitcoin-protocol :as bitcoin])
+(def ch
+  (wait-for-result
+   (tcp-client {:host "localhost",
+                :port 10000,
+                :frame bitcoin/network-protocol})))
+(enqueue ch {:command :getaddr
+             :magic   :main})
+(wait-for-message ch)
+;; => {:magic :main
+;;    :command :addr
+;;    :checksum [...]
+;;    :addrs [blah blah blah]}
+```
+
+## Examples<a id="sec-1-2" name="sec-1-2"></a>
 
 The two functions you care most about are `write-message` and
 `read-message.` `write-message` will convert hashmaps to
 Bytebuffers. `read-message` will bring Bytebuffers back to
-hashmaps.
+hashmaps. If you use aleph, then you don't have to care about
+either of these.
 
-### Build a version message<a id="sec-1-1-1" name="sec-1-1-1"></a>
+### Build a version message<a id="sec-1-2-1" name="sec-1-2-1"></a>
 
 ```clojure
 (require '[bitcoin-protocol.messages :refer [write-message read-message]])
@@ -50,7 +74,7 @@ hashmaps.
 ;; #<HeapByteBuffer java.nio.HeapByteBuffer[pos=0 lim=122 cap=122]>
 ```
 
-### Read the version message back<a id="sec-1-1-2" name="sec-1-1-2"></a>
+### Read the version message back<a id="sec-1-2-2" name="sec-1-2-2"></a>
 
 `Read-message` works for other messages, like getaddr, ping, pong
 and so forth.
@@ -75,7 +99,7 @@ and so forth.
  :addr-recv {:port 0 :ip "0.0.0.0" :services 1N}
 ```
 
-### Verify the insides<a id="sec-1-1-3" name="sec-1-1-3"></a>
+### Verify the insides<a id="sec-1-2-3" name="sec-1-2-3"></a>
 
 Don't be shy when it comes to verifying the encoding. The raw bytes
 are easy to see (and there are better formatters in Clojure land).
@@ -90,7 +114,7 @@ are easy to see (and there are better formatters in Clojure land).
 (def raw-bytes (str-bytes my-version-message)
 ```
 
-### The Rest<a id="sec-1-1-4" name="sec-1-1-4"></a>
+### The Rest<a id="sec-1-2-4" name="sec-1-2-4"></a>
 
 Everything else works just like the version message. Some of them
 haven't been tested yet, however. If you run into an error, please

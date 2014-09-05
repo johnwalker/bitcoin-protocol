@@ -11,15 +11,37 @@
 
   #+BEGIN_SRC clojure
 ;; Latest version on Clojars
-[io.johnwalker/bitcoin-protocol "0.17.3"]
+[io.johnwalker/bitcoin-protocol "0.17.4"]
   #+END_SRC
+
+** Usage with Aleph
+   [[https://github.com/ztellman/aleph][Aleph]] has support for decoding of the wire automatically. Suppose
+   you are connecting to a Bitcoin peer. Then you can communicate him
+   in the usual manner with:
+
+   #+BEGIN_SRC clojure
+(require '[io.johnwalker/bitcoin-protocol :as bitcoin])
+(def ch
+  (wait-for-result
+   (tcp-client {:host "localhost",
+                :port 10000,
+                :frame bitcoin/network-protocol})))
+(enqueue ch {:command :getaddr
+             :magic   :main})
+(wait-for-message ch)
+;; => {:magic :main
+;;    :command :addr
+;;    :checksum [...]
+;;    :addrs [blah blah blah]}
+   #+END_SRC
 
 ** Examples
 
    The two functions you care most about are =write-message= and
    =read-message.= =write-message= will convert hashmaps to
    Bytebuffers. =read-message= will bring Bytebuffers back to
-   hashmaps.
+   hashmaps. If you use aleph, then you don't have to care about
+   either of these.
 
 *** Build a version message
 

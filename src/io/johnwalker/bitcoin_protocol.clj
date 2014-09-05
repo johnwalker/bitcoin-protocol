@@ -245,7 +245,7 @@
                        "tx" tx-payload})
 
 (let [empty-byte-array (-> [] to-byte-buffer .array)]
-  (defcodec bitcoin-network-message
+  (defcodec network-protocol
     (e/header (ordered-map :magic magic
                            :command command
                            :length :uint32-le
@@ -281,10 +281,10 @@
   "Write a bitcoin network message"
   [m]
   ;; TODO - asserts
-  (contiguous (encode bitcoin-network-message m)))
+  (contiguous (encode network-protocol m)))
 
 
 (defn read-message
   "Read a bitcoin network message"
   [x]
-  (decode bitcoin-network-message x))
+  (decode network-protocol x))
