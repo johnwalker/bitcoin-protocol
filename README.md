@@ -1,15 +1,4 @@
-- [bitcoin-protocol](#bitcoin-protocol)
-  - [Usage with Aleph](#usage-with-aleph)
-  - [Examples](#examples)
-    - [Build a version message](#build-a-version-message)
-    - [Read the version message back](#read-the-version-message-back)
-    - [Verify the insides](#verify-the-insides)
-    - [The Rest](#the-rest)
-- [License](#license)
-
 # bitcoin-protocol<a id="sec-1" name="sec-1"></a>
-
-
 
 This is an implementation of the [Bitcoin networking protocol](https://en.bitcoin.it/wiki/Protocol_specification). It can
 be used to communicate with peers within Bitcoin networks. The
